@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Todo } from "./todo";
 
 
 function App() {
@@ -86,60 +87,25 @@ function App() {
 
                   {todoItems.length > 0 
                   ? todoItems.map((item) => (
-                    <li className="row bg-secondary rounded my-3 py-1" key={item.id}>
-                      <section className="row py-2">
-                        <div className="col" id={"todoDisplay" + String(item.id)} style={{letterSpacing:"1px", lineHeight:"2em"}}>
-                            {item.text.split('\n').map(x => (
-                              <>
-                                <div>
-                                  {x}
-                                </div>
-                              </>
-                            ))}
-                        </div>
-                        <div className="col pt-1" id={"todoEditInput" + String(item.id)} style={{letterSpacing:"1px"}} hidden>
-                          <textarea className="w-100" 
-                              value={editTextInput} 
-                              onChange={(e) => setEditText(e.target.value)} 
-                              rows={3}
-                          ></textarea>
-                        </div>
-                      </section>
-                      <section className="row py-2" id={"editToolbar" + String(item.id)} hidden>
-                        <div className="col-2">
-                          <button title="Save Changes" className="btn btn-success rounded w-100" type="button" onClick={() => saveChanges(item)}>
-                            &#10004;
-                          </button>
-                        </div>
-                        <div className="col-2">
-                          <button title="Discard Changes" className="btn btn-danger rounded w-100" type="button" onClick={() => discardChanges(item)}>
-                            &#10006;
-                          </button>
-                        </div>
-                      </section>
-                      <section className="row py-2" id={"todoToolbar" + String(item.id)}>
-                        <div className="col-2">
-                          <button title="Edit" className="btn btn-primary rounded w-100" type="button" onClick={() => editTodoItem(item)}>
-                            &#9998;
-                          </button>
-                        </div>
-                        <div className="col-2">
-                          <button title="Delete" className="btn btn-danger rounded w-100" type="button" onClick={() => removeTodoItem(item)}>
-                            &#10006;
-                          </button>
-                        </div>
-                      </section>
-                    </li>
+                    <Todo 
+                      item={item}
+                      editTextInput={editTextInput}
+                      setEditText={setEditText}
+                      saveChanges={saveChanges}
+                      discardChanges={discardChanges}
+                      editTodoItem={editTodoItem}
+                      removeTodoItem={removeTodoItem}
+                    />
                   ))
-                : (
-                  <div className="row text-center bg-secondary rounded my-3 py-2">
-                    <div className="col">
-                      <h5>
-                        You dont have any items
-                      </h5>
+                  : (
+                    <div className="row text-center bg-secondary rounded my-3 py-2">
+                      <div className="col">
+                        <h5>
+                          You dont have any items
+                        </h5>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                   <section className="row border-top border-white mt-3 py-3" id="InputRow">
                     <div className="col">
