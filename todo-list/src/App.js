@@ -86,43 +86,47 @@ function App() {
                   </h1>
 
                   {(todoItems.map((item) => (
-                    <li className="row my-2 py-1 bg-secondary rounded">
-                      <div className="row">
+                    <li className="row my-2 py-1 bg-secondary rounded" key={item.id}>
+                      <section className="row py-2">
                         <div className="col" id={"todoDisplay" + String(item.id)} style={{letterSpacing:"1px", lineHeight:"2em"}}>
                           <p>
-                            {item.text}
+                            {item.text.split('\n').map(x => (
+                              <>
+                                <div>
+                                  {x}
+                                </div>
+                              </>
+                            ))}
                           </p>
                         </div>
                         <div className="col pt-1" id={"todoEditInput" + String(item.id)} style={{letterSpacing:"1px"}} hidden>
                           <textarea className="w-100" value={editTextInput} onChange={(e) => setEditText(e.target.value)} rows={3}></textarea>
                         </div>
-                      </div>
-
-                      <div className="row py-2" id={"editToolbar" + String(item.id)} hidden>
+                      </section>
+                      <section className="row py-2" id={"editToolbar" + String(item.id)} hidden>
                         <div className="col-2">
-                          <button className="btn btn-success w-100 rounded" type="button" onClick={() => saveChanges(item)}>
+                          <button title="Save Changes" className="btn btn-success w-100 rounded" type="button" onClick={() => saveChanges(item)}>
                             &#10004;
                           </button>
                         </div>
                         <div className="col-2">
-                          <button className="btn btn-danger w-100 rounded" type="button" onClick={() => discardChanges(item)}>
+                          <button title="Discard Changes" className="btn btn-danger w-100 rounded" type="button" onClick={() => discardChanges(item)}>
                             &#10006;
                           </button>
                         </div>
-                      </div>
-
-                      <div className="row py-2" id={"todoToolbar" + String(item.id)}>
+                      </section>
+                      <section className="row py-2" id={"todoToolbar" + String(item.id)}>
                         <div className="col-2">
-                          <button className="btn btn-primary w-100 rounded" type="button" onClick={() => editTodoItem(item)}>
+                          <button title="Edit Todo Item" className="btn btn-primary w-100 rounded" type="button" onClick={() => editTodoItem(item)}>
                             &#9998;
                           </button>
                         </div>
                         <div className="col-2">
-                          <button className="btn btn-danger w-100 rounded" type="button" onClick={() => removeTodoItem(item)}>
+                          <button title="Delete Todo Item" className="btn btn-danger w-100 rounded" type="button" onClick={() => removeTodoItem(item)}>
                             &#10006;
                           </button>
                         </div>
-                      </div>
+                      </section>
                     </li>
                   )))}
 
@@ -136,10 +140,10 @@ function App() {
                         ></textarea>
                     </div>
                     <div className="col-3">
-                      <button className="btn btn-success w-100" type="button" onClick={() => addTodoItem()}>
-                        Add
+                      <button title="Add Todo Item" className="btn btn-success w-100" type="button" onClick={() => addTodoItem()}>
+                          Add
                       </button>
-                      <button className="btn btn-secondary w-100 mt-2" type="button" onClick={() => clearInputText()}>
+                      <button title="Clear All Text" className="btn btn-secondary w-100 mt-2" type="button" onClick={() => clearInputText()}>
                         Clear
                       </button>
                     </div>
