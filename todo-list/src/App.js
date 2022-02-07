@@ -23,11 +23,10 @@ function App() {
   }
 
   const removeTodoItem = props => {
-    var itemId = props.id;
     var todoList = [];
-    for (let index = 0; index < todoItems.length; index++) {
-      var todo = todoItems[index];
-      if(todo.id !== itemId)
+    for (let i = 0; i < todoItems.length; i++) {
+      var todo = todoItems[i];
+      if(todo.id !== props.id)
       {
         todoList.push(todo);
       }
@@ -48,8 +47,8 @@ function App() {
   const saveChanges = props => {
     toggleEdit(props,false);
     var todoList = []
-    for (let index = 0; index < todoItems.length; index++) {
-      const todo = todoItems[index];
+    for (let i = 0; i < todoItems.length; i++) {
+      const todo = todoItems[i];
       if(todo.id === props.id)
       {
         todo.text = editTextInput;
