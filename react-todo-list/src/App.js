@@ -1,38 +1,43 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { Todo } from "./todo";
+import { AddTodo, RemoveTodo, UpdateTodo } from './todo/components/redux';
 
 
 function App() {
   const [textInput,setText] = useState("");
   const [editTextInput, setEditText] = useState("");
-  const [todoId,setTodoId] = useState(0);
-  const [todoItems,setTodoItems] = useState([]);
+
+  // const [todoId,setTodoId] = useState(0);
+  // const [todoItems,setTodoItems] = useState([]);
   
-  const incrementId = () => setTodoId(todoId + 1);
+  // const incrementId = () => setTodoId(todoId + 1);
   const clearInputText = () => setText("");
   const clearEditText = () => setEditText("");
 
   const addTodoItem = () => {
-    var todoItem = {
-      id: todoId,
-      text: textInput 
-    };
-    var todoList = [...todoItems,todoItem];
-    setTodoItems(todoList);
+    // var todoItem = {
+    //   id: todoId,
+    //   text: textInput 
+    // };
+    // var todoList = [...todoItems,todoItem];
+    AddTodo(textInput);
+    // setTodoItems(todoList);
     clearInputText();
-    incrementId();
+    // incrementId();
   }
 
   const removeTodoItem = props => {
-    var todoList = [];
-    for (let i = 0; i < todoItems.length; i++) {
-      var todo = todoItems[i];
-      if(todo.id !== props.id)
-      {
-        todoList.push(todo);
-      }
-    }
-    setTodoItems(todoList);
+    // var todoList = [];
+    // for (let i = 0; i < todoItems.length; i++) {
+    //   var todo = todoItems[i];
+    //   if(todo.id !== props.id)
+    //   {
+    //     todoList.push(todo);
+    //   }
+    // }
+    // setTodoItems(todoList);
+    RemoveTodo(props);
   }
 
   const editTodoItem = props => {
@@ -47,16 +52,21 @@ function App() {
 
   const saveChanges = props => {
     toggleEdit(props,false);
-    var todoList = []
-    for (let i = 0; i < todoItems.length; i++) {
-      const todo = todoItems[i];
-      if(todo.id === props.id)
-      {
-        todo.text = editTextInput;
-      }
-      todoList.push(todo);
+    var todoItem = {
+      id: props.id,
+      text: editTextInput
     }
-    setTodoItems(todoList);
+    UpdateTodo(todoItem);
+    // var todoList = []
+    // for (let i = 0; i < todoItems.length; i++) {
+    //   const todo = todoItems[i];
+    //   if(todo.id === props.id)
+    //   {
+    //     todo.text = editTextInput;
+    //   }
+    //   todoList.push(todo);
+    // }
+    // setTodoItems(todoList);
     clearEditText();
   }
 
@@ -85,8 +95,8 @@ function App() {
                     </strong>
                   </h1>
 
-                  {todoItems.length > 0 
-                  ? todoItems.map((item) => (
+                  {this.props.todoItems.length > 0 
+                  ? this.props.todoItems.map((item) => (
                     <Todo 
                       item={item}
                       editTextInput={editTextInput}
@@ -134,4 +144,16 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  todoItems: [{
+    id: 0,
+    text: ""
+  }]
+}
+
+function mapStateToProps(state) {
+  const { todos } = state
+  return { todoItems: todos.todoList }
+}
+
+export default connect(mapStateToProps)(App);
