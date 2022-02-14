@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { Todo } from "./todo";
 // import { AddTodo, RemoveTodo, UpdateTodo } from './todo/components/redux';
 
@@ -95,8 +95,8 @@ function App() {
                     </strong>
                   </h1>
 
-                  {this.props.todoItems.length > 0 
-                  ? this.props.todoItems.map((item) => (
+                  {todoItems.length > 0 
+                  ? todoItems.map((item) => (
                     <Todo 
                       item={item}
                       editTextInput={editTextInput}
@@ -151,9 +151,10 @@ App.propTypes = {
   }]
 }
 
-function mapStateToProps(state) {
-  const { todos } = state
-  return { todoItems: todos.todoList }
-}
+// function mapStateToProps(state) {
+//   const { todos } = state
+//   return { todoItems: todos.todoList }
+// }
 
-export default connect(mapStateToProps)(App);
+// export default connect(mapStateToProps)(App);
+export default App;
